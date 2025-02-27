@@ -1,42 +1,53 @@
 import { useEffect, useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+// Icons
+import { FaEnvelope, FaLock } from "react-icons/fa6";
+// import { FaSpinner } from "react-icons/fa6";
+
+// Component
+import LabeledInput from "../components/LabeledInput";
+import PrimaryButton from "../components/PrimaryButton";
 
 function Login() {
   const BASE_URL = import.meta.env.VITE_BASE_ENDPOINT;
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
+
+  // Inputs
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // Run when Page loads
+  let navigate = useNavigate();
   useEffect(() => {
+    document.title = "AccessWorld - VM Login";
+
     function checkToken() {
       const access_token = localStorage.getItem("access_token");
 
       if (access_token) {
-        console.log("access found");
-
         // Connect to Server
 
         // If Token is valid then Redirect to Dashboard Logic
+        navigate("/dashboard");
       }
     }
     checkToken();
-  }, []);
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    console.log("trying to login");
 
     // Basic validation
     if (!email || !password) {
-      setError("Email and password are required.");
       return;
     }
 
     setLoading(true);
-    setError(null);
+    // setError(null);
 
     try {
       // Response to the Server
@@ -50,77 +61,78 @@ function Login() {
 
       // Check if the Status code is 200
       if (!response.ok) {
-        throw new Error("Registration failed. Please try again.");
+        throw new Error("An Error has occured! Try again");
       }
 
-      // If Status code is 2000
+      // If Status code is 200
       const data = await response.json();
 
       // Store the Key to LocalStorage
       localStorage.setItem("access_token", data.access_token);
 
-      redirect("/dashboard");
-      // console.log(data);
+      // Redirects to dashboard
+      navigate("/dashboard");
     } catch (error) {
-      setError(error.message);
+      // setError(error.message);
+      alert(error.message);
     } finally {
       setLoading(false);
+      setEmail("");
+      setPassword("");
     }
   };
 
   return (
-    <main className="min-h-screen flex justify-center items-center bg-[#F7F2E8]">
-      <form
-        onSubmit={handleLogin}
-        className="mx-auto h-full w-1/3 p-7 bg-white rounded-xl shadow-2xl flex flex-col items-center justify-center"
-      >
-        {/* Title */}
-        <div className="flex items-center justify-center mb-6">
-          <h1 className="font-bold text-4xl uppercase">Login</h1>
-        </div>
+    <main className="flex justify-center items-center min-h-screen bg-gray-200">
+      <div className="bg-white shadow-md rounded-xl px-8 pt-6 pb-8 w-full max-w-md">
+        <h2 className="text-3xl font-bold mb-6 text-center text-white">
+          <span className="bg-gradient-to-r text-transparent from-blue-500 to-blue-700 bg-clip-text">
+            AWT-VM LOGIN
+          </span>
+        </h2>
 
-        {/* Email */}
-        <div className="flex justify-between w-full">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter Email"
-            className="w-full p-3 rounded-md mb-4 border border-gray-500"
+        <form onSubmit={handleLogin}>
+          <LabeledInput
+            label={"Email"}
+            placeholder={"Enter your Email"}
+            icon={<FaEnvelope />}
+            type={"email"}
+            inputValue={email}
+            setInputValue={setEmail}
           />
-        </div>
 
-        {/* Password */}
-        <div className="flex justify-between w-full">
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter Password"
-            className="w-full p-3 rounded-md mb-4 border border-gray-500 "
+          <LabeledInput
+            label={"Password"}
+            placeholder={"Enter your password"}
+            icon={<FaLock />}
+            type={"password"}
+            inputValue={password}
+            setInputValue={setPassword}
           />
-        </div>
 
-        {/* Button */}
-        <div className="w-full flex justify-around flex-col">
-          <button
-            type="submit"
-            className="mt-5 cursor-pointer border-2 bg-[#FDC886] py-1 px-3 rounded-xl font-medium text-lg"
-            disabled={loading}
-          >
-            {loading ? "Logging..." : "Login"}
-          </button>
+          <div className="flex items-center justify-center">
+            {/* <button
+              type="submit"
+              className={`bg-blue-400 text-white font-bold flex items-center justify-center py-3 px-4 rounded focus:outline-none hover:bg-blue-600 w-full cursor-pointer disabled:bg-blue-300  disabled:cursor-not-allowed `}
+              disabled={loading}
+            >
+              {loading ? (
+                <FaSpinner className="text-center animate-spin" />
+              ) : (
+                "Login"
+              )}
+            </button> */}
 
-          <Link
-            to={"/register"}
-            className="mt-5 cursor-pointer border-2 bg-[#FDC886] py-1 px-3 rounded-xl font-medium text-lg text-center"
-          >
-            Register
+            <PrimaryButton buttonText={"Login"} loading={loading} />
+          </div>
+        </form>
+
+        <div className="text-center mt-4">
+          <Link to="/register" className="hover:underline">
+            Register User
           </Link>
         </div>
-      </form>
-
-      {error && <p className="text-red-500">{error}</p>}
+      </div>
     </main>
   );
 }

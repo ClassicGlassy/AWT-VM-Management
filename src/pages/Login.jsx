@@ -9,6 +9,9 @@ import { FaEnvelope, FaLock } from "react-icons/fa6";
 import LabeledInput from "../components/LabeledInput";
 import PrimaryButton from "../components/PrimaryButton";
 
+// Utility
+import { checkToken } from "../utils/checkToken";
+
 function Login() {
   const BASE_URL = import.meta.env.VITE_BASE_ENDPOINT;
 
@@ -24,17 +27,9 @@ function Login() {
   useEffect(() => {
     document.title = "AccessWorld - VM Login";
 
-    function checkToken() {
-      const access_token = localStorage.getItem("access_token");
-
-      if (access_token) {
-        // Connect to Server
-
-        // If Token is valid then Redirect to Dashboard Logic
-        navigate("/dashboard");
-      }
+    if (checkToken()) {
+      navigate("/dashboard");
     }
-    checkToken();
   }, [navigate]);
 
   const handleLogin = async (e) => {
@@ -69,6 +64,7 @@ function Login() {
 
       // Store the Key to LocalStorage
       localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("email", email);
 
       // Redirects to dashboard
       navigate("/dashboard");

@@ -6,7 +6,6 @@ function LabeledInput({
   icon,
   inputValue,
   setInputValue,
-  errorMessage,
 }) {
   return (
     <div className="mb-6">
@@ -26,8 +25,6 @@ function LabeledInput({
           required={true}
         />
       </div>
-
-      {errorMessage}
     </div>
   );
 }

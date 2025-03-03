@@ -23,6 +23,7 @@ function LabeledInput({
           value={inputValue}
           autoComplete="true"
           required={true}
+          min={1}
         />
       </div>
     </div>

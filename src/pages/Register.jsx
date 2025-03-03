@@ -46,13 +46,14 @@ function Register() {
       }
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
+
+      alert(data.message);
 
       // Redirect to Login
 
       navigate("/");
     } catch (error) {
-      // setError(error.message);
       alert(error.message);
     } finally {
       setLoading(false);

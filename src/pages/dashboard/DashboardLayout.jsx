@@ -21,6 +21,8 @@ function DashboardLayout() {
   //   }
   // });
 
+  const email = localStorage.getItem("email");
+  
   function logout() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("email");
@@ -80,9 +82,7 @@ function DashboardLayout() {
         </div>
         {/* Profile */}
         <div className="basis-1/5 flex flex-col justify-around pr-4">
-          <p className="text-white text-right ">
-            saurabrtn.bajracharya@gmail.com
-          </p>
+          <p className="text-white text-right ">{email}</p>
 
           <button
             className="text-[#FF2929] flex items-center justify-end  space-x-4 text-lg font-medium cursor-pointer"

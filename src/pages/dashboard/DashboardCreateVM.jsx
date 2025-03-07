@@ -32,12 +32,12 @@ function DashboardCreateVM() {
       icon: <FaWindows />,
     },
     {
-      name: "Ubuntu",
+      name: "Ubuntu 20.04 LTS",
       value: "ubuntu-focal-20.04-cloudimg",
       icon: <SiCanonical />,
     },
     {
-      name: "Rockey",
+      name: "Rockey Linux",
       value: "rockey",
       icon: <SiRockylinux />,
     },
@@ -47,8 +47,17 @@ function DashboardCreateVM() {
   async function createVM(e) {
     e.preventDefault();
 
-    // Basic Validation
-    if (!vmName && !cpu && !memory && !disk && !os) return;
+    // Basic Validation with trimming strings
+    if (
+      !vmName?.trim() ||
+      !cpu?.trim() ||
+      !memory?.trim() ||
+      !disk?.trim() ||
+      !os?.trim()
+    ) {
+      alert("Please fill out all fields.");
+      return;
+    }
 
     setLoading(true);
 
@@ -86,6 +95,7 @@ function DashboardCreateVM() {
       setCpu("");
       setMemory("");
       setDisk("");
+      setOs("");
     }
   }
 
@@ -158,6 +168,7 @@ function DashboardCreateVM() {
           </div>
         </div>
 
+        {/* Create Button */}
         <div className="col-start-1 col-end-3">
           <PrimaryButton buttonText={"Create VM"} loading={loading} />
         </div>

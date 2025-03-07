@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 // Icons
 import { FaEnvelope, FaLock } from "react-icons/fa6";
-// import { FaSpinner } from "react-icons/fa6";
 
 // Component
 import LabeledInput from "../components/LabeledInput";
@@ -22,11 +21,8 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // const email = e.target.email.value;
-    // const password = e.target.password.value;
-
     // Basic validation
-    if (!email || !password) {
+    if (!email?.trim() || !password?.trim()) {
       return;
     }
 
@@ -46,12 +42,10 @@ function Register() {
       }
 
       const data = await response.json();
-      // console.log(data);
 
       alert(data.message);
 
       // Redirect to Login
-
       navigate("/");
     } catch (error) {
       alert(error.message);
@@ -72,6 +66,7 @@ function Register() {
         </h2>
 
         <form onSubmit={handleRegister}>
+          {/* Email Field */}
           <LabeledInput
             label={"Email"}
             placeholder={"Enter your Email"}
@@ -81,6 +76,7 @@ function Register() {
             setInputValue={setEmail}
           />
 
+          {/* Password Field */}
           <LabeledInput
             label={"Password"}
             placeholder={"Enter your password"}
@@ -90,23 +86,13 @@ function Register() {
             setInputValue={setPassword}
           />
 
+          {/* Register Button */}
           <div className="flex items-center justify-center">
-            {/* <button
-              type="submit"
-              className={`bg-blue-400 text-white font-bold flex items-center justify-center py-3 px-4 rounded focus:outline-none hover:bg-blue-600 w-full cursor-pointer disabled:bg-blue-300  disabled:cursor-not-allowed `}
-              disabled={loading}
-            >
-              {loading ? (
-                <FaSpinner className="text-center animate-spin" />
-              ) : (
-                "Register User"
-              )}
-            </button> */}
-
             <PrimaryButton buttonText="Register" loading={loading} />
           </div>
         </form>
 
+        {/* Link to Login page */}
         <div className="text-center mt-4">
           <Link to="/" className="hover:underline">
             Login

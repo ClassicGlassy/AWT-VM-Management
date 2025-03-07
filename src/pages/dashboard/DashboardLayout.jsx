@@ -1,6 +1,8 @@
-// import { useState } from "react";
-
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+// Utility Funtion
+import { checkToken } from "../../utils/checkToken";
 
 // Icon
 import { FaArrowRightFromBracket } from "react-icons/fa6";
@@ -8,28 +10,25 @@ import { IoMdCreate, IoMdTrash } from "react-icons/io";
 
 // Image
 import logo from "../../assets/logo.svg";
-import { useEffect } from "react";
-import { checkToken } from "../../utils/checkToken";
 
 function DashboardLayout() {
   const navigate = useNavigate();
 
-  // TODO: Enable this in Production
-  // useEffect(() => {
-  //   if (!checkToken()) {
-  //     navigate("/");
-  //   }
-  // });
+  useEffect(() => {
+    if (import.meta.env.VITE_APP_MODE === "production" && !checkToken()) {
+      navigate("/");
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const email = localStorage.getItem("email");
-  
+
   function logout() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("email");
     navigate("/");
   }
-
-  // const email = localStorage.getItem("email");
 
   return (
     <div className="flex space-x-5 min-h-screen bg-gray-300">

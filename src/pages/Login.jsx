@@ -16,7 +16,6 @@ function Login() {
   const BASE_URL = import.meta.env.VITE_BASE_ENDPOINT;
 
   const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
 
   // Inputs
   const [email, setEmail] = useState("");
@@ -27,22 +26,20 @@ function Login() {
   useEffect(() => {
     document.title = "AccessWorld - VM Login";
 
-    if (checkToken()) {
+    if (import.meta.env.VITE_APP_MODE === "production" && checkToken()) {
       navigate("/dashboard");
     }
   }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("trying to login");
 
     // Basic validation
-    if (!email || !password) {
+    if (!email?.trim() || !password?.trim()) {
       return;
     }
 
     setLoading(true);
-    // setError(null);
 
     try {
       // Response to the Server
@@ -69,7 +66,6 @@ function Login() {
       // Redirects to dashboard
       navigate("/dashboard");
     } catch (error) {
-      // setError(error.message);
       alert(error.message);
     } finally {
       setLoading(false);
@@ -88,6 +84,7 @@ function Login() {
         </h2>
 
         <form onSubmit={handleLogin}>
+          {/* Email Field */}
           <LabeledInput
             label={"Email"}
             placeholder={"Enter your Email"}
@@ -97,6 +94,7 @@ function Login() {
             setInputValue={setEmail}
           />
 
+          {/* Password Field */}
           <LabeledInput
             label={"Password"}
             placeholder={"Enter your password"}
@@ -106,23 +104,13 @@ function Login() {
             setInputValue={setPassword}
           />
 
+          {/* Login button */}
           <div className="flex items-center justify-center">
-            {/* <button
-              type="submit"
-              className={`bg-blue-400 text-white font-bold flex items-center justify-center py-3 px-4 rounded focus:outline-none hover:bg-blue-600 w-full cursor-pointer disabled:bg-blue-300  disabled:cursor-not-allowed `}
-              disabled={loading}
-            >
-              {loading ? (
-                <FaSpinner className="text-center animate-spin" />
-              ) : (
-                "Login"
-              )}
-            </button> */}
-
             <PrimaryButton buttonText={"Login"} loading={loading} />
           </div>
         </form>
 
+        {/* Link to Register page */}
         <div className="text-center mt-4">
           <Link to="/register" className="hover:underline">
             Register User

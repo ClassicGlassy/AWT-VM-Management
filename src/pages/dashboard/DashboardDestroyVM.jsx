@@ -14,7 +14,7 @@ function DashboardDestroyVM() {
     e.preventDefault();
 
     // Basic validation
-    if (!vmName) {
+    if (!vmName?.trim()) {
       return;
     }
 
@@ -36,10 +36,8 @@ function DashboardDestroyVM() {
 
       const data = await response.json();
 
-      // console.log(data);
       alert(data.message);
     } catch (error) {
-      // setError(error.message);
       alert(error.message);
     } finally {
       setLoading(false);

@@ -1,107 +1,86 @@
 # AccessWorld Tech Virtual Machine Management
 
-This project is a Virtual Machine (VM) management platform developed using React and bundled with Vite. The portal allows you to register new user, login to user and create VMs. <hr>
-When you build the project using Docker, it creates a production build of the application, optimized for deployment. This build is ready to be run in a live environment, ensuring efficient performance and minimized resource usage.
+This project is a Virtual Machine (VM) management platform built with React and Vite. It provides a user-friendly interface for registering new users, logging in, creating and destroying virtual machines. Containerized with Docker, this application is optimized for production deployment, ensuring efficient performance and resource utilization.
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Deployment](#deployment)
-- [Parameters](#parameters)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Deployment](#deployment)
+  - [Configuration](#configuration)
+
+## Prerequisites
+
+- **Docker** (installed and running)
+- **Git** (for cloning the repository)
+- **Node.js** and **npm** (for local development, if needed)
 
 ## Installation
 
 To get started with the project, follow these steps:
 
-### 1. Clone the Repository
+1.  **Clone the Repository:**
 
-```bash
-git clone https://github.com/ClassicGlassy/AWT-VM-Management.git
-cd AWT-VM-Management
-```
+    First, clone the repository and navigate to the project directory:
 
-### 2. Set up Environment Variables
+    ```bash
+    git clone https://github.com/ClassicGlassy/AWT-VM-Management.git
+    cd AWT-VM-Management
+    ```
 
-Create a .env file in the root of the project if it does not already exist. Copy parameters from `.env.example` file:
+2.  **Environment Variables:**
 
-```ini
-VITE_BASE_ENDPOINT = "http://localhost" #Change to Endpoint of request.
-VITE_APP_MODE = "production" #Change to development for testing.
-```
+    Create a `.env` file in the root of the project if it does not already exist. Copy the parameters from the `.env.example` file and update them accordingly:
 
-### 3. Build the Docker Image
+    ```ini
+    VITE_BASE_ENDPOINT = "http://localhost" # Backend API endpoint
+    VITE_APP_MODE = "production" # or "development"
+    ```
 
-To build the Docker image, run the following command in the root directory of your project (where the Dockerfile is located).
+    Make sure to modify the **`VITE_BASE_ENDPOINT`** to match the API endpoint you will be using.
 
-```bash
-docker build .
-```
+3.  **Build the Docker Image:**
 
-Additional Flags:
+    To build the Docker image, run the following command in the root directory of the project (where the Dockerfile is located):
 
-- _-t:_ Tag your image with a custom name and version tag.
+    ```bash
+    docker build -t awt-vm-management .
+    ```
 
-```bash
-docker build -t your-image-name:tag .
-```
+    Optional flags:
 
-- _--no-cache:_ Use this flag to build the image without cache, ensuring that all layers are rebuilt from scratch.
+    - `-t <image-name>:<tag>`: Tag the image.
+    - `--no-cache`: Rebuild the image without using cached layers.
 
-```bash
-docker build --no-cache .
-```
+    ```bash
+    docker build -t awt-vm-management:latest .
+    docker build --no-cache -t awt-vm-management:latest .
+    ```
 
-> Note: Ensure Docker is running on your machine and that you have the necessary permissions to build images.
+    > Note: Ensure that Docker is running on your machine and you have the necessary permissions to build images.
 
 ## Deployment
 
-### 1. Launching Docker Container with Image
+Once your Docker image is built, you can deploy it using the following steps:
 
-Run the following command in `terminal`:
+1.  **Run the Docker Container:**
 
-```bash
-docker run -p <PORT>:4173 <ImageHash/ ImageName>
-```
+    Run the following command to start the Docker container in detached mode (running in the background):
 
-It will launch the web application at [`http://localhost:<PORT>`](http://localhost)
+    ```bash
+    docker run -d -p 80:80 awt-vm-management
+    ```
 
-## Parameters
+    After the container starts, you can access the application by navigating to [`http://localhost`](http://localhost:80) in your browser.
 
-There are 3 parameters that have to be configured before the build process.
+## Configuration
 
-- [PORT](#port)
-- [BASE_ENDPOINT](#base_endpoint)
-- [APP_MODE](#app_mode)
+- **`VITE_BASE_ENDPOINT`:** Specifies the URL of the backend API. This application relies on a separate backend API service for its data and functionality. Ensure this variable points to the correct address of your running API.
+- **`VITE_APP_MODE`:** Sets the application mode (production or development).
 
-#### PORT
+  Example `.env` configuration:
 
-**PORT** specifies which port the application should run in the docker container. It can be changed in the `vite.config.js` file.
-
-```js
-server: {
-    port: //Port for the application,
-    host: "0.0.0.0",
-  },
-```
-
-> Note: if port is changed in `vite.config.js` then Docker need to be launched using.
-
-```bash
-docker run -p <Host-PORT>:<Application-PORT> <ImageHash/ ImageName>
-```
-
-#### BASE_ENDPOINT
-
-**ENDPOINT** specifies which URI must it communicate to request data. It can be changed in the `.env` file.
-
-```js
-VITE_BASE_ENDPOINT = "http://localhost:8080";
-```
-
-#### APP_MODE
-
-**APP_MODE** specifies whether the application is in production or development. It can be changed in the `.env` file.
-
-```js
-VITE_APP_MODE = "production/ development";
-```
+  ```ini
+  VITE_BASE_ENDPOINT = "http://api.yourdomain.com"  # Set the API endpoint here.
+  VITE_APP_MODE = "production"  # Set to "development" for local testing.
+  ```

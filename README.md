@@ -4,10 +4,11 @@ This project is a Virtual Machine (VM) management platform built with React and 
 
 ## Table of Contents
 
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Deployment](#deployment)
-  - [Configuration](#configuration)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Deployment](#deployment)
+- [Configuration](#configuration)
+- [NGINX (Optional - Production)](#nginx-optional-production)
 
 ## Prerequisites
 
@@ -84,3 +85,70 @@ Once your Docker image is built, you can deploy it using the following steps:
   VITE_BASE_ENDPOINT = "http://api.yourdomain.com"  # Set the API endpoint here.
   VITE_APP_MODE = "production"  # Set to "development" for local testing.
   ```
+
+## NGINX (Optional - Production)
+
+For production deployments, it is highly recommended to use NGINX as a reverse proxy. This improves performance, security, and allows for advanced configurations.
+
+1.  **Create `nginx.conf`:**
+
+    Create a file named `nginx.conf` in your project directory with the following configuration:
+
+    ```nginx
+    server {
+        listen 80;
+        server_name yourdomain.com; # Replace with your domain
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html index.htm;
+            try_files $uri $uri/ /index.html;
+        }
+
+        # Security Headers
+        add_header X-Frame-Options "SAMEORIGIN";
+        # add_header X-XSS-Protection "1; mode=block"; # Deprecated, use CSP instead
+        add_header X-Content-Type-Options "nosniff";
+
+        # Optional: Custom error page for 404 errors (if you want to show a custom HTML page for some cases)
+        error_page 404 /index.html;  # Serve index.html in case of 404 errors (handled by React Router)
+
+    }
+    ```
+
+    > **Note:** Replace `yourdomain.com` with your actual domain or IP address. **Ensure you validate your `nginx.conf` before deploying to a production environment.**
+
+2.  **Update Dockerfile (Optional):**
+
+    If you want to include NGINX in your Docker image, you can modify your `Dockerfile` as follows. Otherwise you can run a seperate nginx container, and point it to your running application container.
+
+    ```dockerfile
+    # Stage 1: Build the React Application
+    FROM node:22-alpine AS build
+
+    WORKDIR /app
+    COPY package*.json ./
+    RUN npm install
+    COPY . .
+    RUN npm run build
+
+    # Stage 2: Serve with NGINX
+    FROM nginx:alpine
+
+    COPY --from=build /app/dist /usr/share/nginx/html
+    COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+    EXPOSE 80
+    CMD ["nginx", "-g", "daemon off;"]
+    ```
+
+3.  **Rebuild and Run (If Dockerfile updated):**
+
+    If you updated your Dockerfile, rebuild the image:
+
+    ```bash
+    docker build -t awt-vm-management .
+    docker run -d -p 80:80 awt-vm-management
+    ```
+
+    If running a seperate NGINX container, you will need to configure the nginx container to point to the running application container.

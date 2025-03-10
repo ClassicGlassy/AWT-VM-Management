@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
@@ -19,23 +18,21 @@ import DashboardDestroyVM from "./pages/dashboard/DashboardDestroyVM";
 import Page404 from "./pages/Page404";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {/* @Public page */}
-        <Route path="/" element={<Login />} />
-        <Route path="register" element={<Register />} />
+  <BrowserRouter>
+    <Routes>
+      {/* @Public page */}
+      <Route path="/" element={<Login />} />
+      <Route path="register" element={<Register />} />
 
-        {/* @Private page */}
-        <Route path="dashboard" element={<DashboardLayout />}>
-          <Route element={<DashboardIndex />} index />
-          <Route path="create-vm" element={<DashboardCreateVM />} />
-          <Route path="destroy-vm" element={<DashboardDestroyVM />} />
-        </Route>
+      {/* @Private page */}
+      <Route path="dashboard" element={<DashboardLayout />}>
+        <Route element={<DashboardIndex />} index />
+        <Route path="create-vm" element={<DashboardCreateVM />} />
+        <Route path="destroy-vm" element={<DashboardDestroyVM />} />
+      </Route>
 
-        {/* @404 page */}
-        <Route path="*" element={<Page404 />} />
-      </Routes>
-    </BrowserRouter>
-  </StrictMode>
+      {/* @404 page */}
+      <Route path="*" element={<Page404 />} />
+    </Routes>
+  </BrowserRouter>
 );

@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@theme {
+  /* Affirmative / Positive / Green */
+  --color-positive: #7dc242;
+  --color-positive-hover: #97ce68;
+
+  /* Negative / Red */
+  --color-negative: #e60000;
+  --color-negative-hover: #ff0000;
+}

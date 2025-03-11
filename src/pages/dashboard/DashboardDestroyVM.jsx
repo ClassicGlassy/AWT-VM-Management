@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LabeledInput from "../../components/LabeledInput";
+import LabeledInput from "../../components/inputbox/LabeledInput";
 import PrimaryButton from "../../components/PrimaryButton";
 
 function DashboardDestroyVM() {
@@ -46,7 +46,7 @@ function DashboardDestroyVM() {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-xl px-8 pt-6 pb-8 w-full max-w-md">
+    <div className="block bg-white shadow-md rounded-xl px-10 py-6 pb-8 w-full">
       <h2 className="text-center font-bold uppercase border-b-2 border-b-red-400 mb-5">
         Destroy Virtual machine
       </h2>

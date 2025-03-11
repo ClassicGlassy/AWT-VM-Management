@@ -6,16 +6,16 @@ import { IoMdCreate, IoMdTrash } from "react-icons/io";
 
 // Logo Branding
 // import logo from "../../../assets/logo.svg";
-import logo from "../../../assets/favicon.svg";
+import logo from "../../assets/favicon.svg";
 
 // Components
-import LinkButtonPositive from "../../../components/linkButton/LinkButtonPositive";
-import LinkButtonNegative from "../../../components/linkButton/LinkButtonNegative";
+import LinkButtonPositive from "../../components/linkButton/LinkButtonPositive";
+import LinkButtonNegative from "../../components/linkButton/LinkButtonNegative";
 import { Link } from "react-router-dom";
 
 function Sidebar({ email, logout }) {
   return (
-    <nav className="sticky top-0 left-0 flex flex-col w-20 md:w-48 h-screen p-2">
+    <nav className="sticky top-0 left-0 flex flex-col w-20 md:w-52 h-screen p-2">
       {/* Branding */}
       <Link
         to={"/dashboard"}
@@ -50,7 +50,7 @@ function Sidebar({ email, logout }) {
 
       {/* User section */}
       <div className="w-full h-20 border-t-2 text-right flex flex-col justify-center ">
-        <p className="text-black overflow-x-clip mb-2">saurab@gmail.com</p>
+        <p className="text-black overflow-x-clip mb-2">{email}</p>
         <button
           className="text-negative hover:text-negative-hover text-right flex items-center justify-end"
           onClick={logout}

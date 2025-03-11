@@ -91,7 +91,10 @@ function Login() {
             type={"email"}
             inputValue={email}
             setInputValue={setEmail}
-            regex={/^[a-zA-Z0-9._%+-]+@accessworld\.net$/}
+            regex={/^[a-zA-Z0-9._]+@accessworld\.net$/}
+            errorMsg={
+              "Please enter a valid email address ending with @accessworld.net"
+            }
           />
 
           {/* Password Field */}
@@ -102,7 +105,10 @@ function Login() {
             type={"password"}
             inputValue={password}
             setInputValue={setPassword}
-            regex={/^(?=.*[A-Z])[A-Za-z0-9]{8,}$/}
+            regex={/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/}
+            errorMsg={
+              "Password must contain at least one uppercase letter and a number, and be at least 8 characters long."
+            }
           />
 
           {/* Login button */}

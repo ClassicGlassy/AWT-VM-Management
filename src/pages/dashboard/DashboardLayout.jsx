@@ -38,7 +38,7 @@ function DashboardLayout() {
         </h1>
 
         {/* Children page here */}
-        <section className=" flex flex-1 items-center justify-center">
+        <section className="flex flex-1 items-center justify-center">
           <Outlet />
         </section>
       </main>

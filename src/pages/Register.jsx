@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa6";
 
 // Component
-import LabeledInput from "../components/inputbox/LabeledInput";
+import LabeledInputValidate from "../components/inputbox/LabeledInputValidate";
 import PrimaryButton from "../components/PrimaryButton";
 
 function Register() {
@@ -58,7 +58,7 @@ function Register() {
 
   return (
     <main className="flex justify-center items-center h-screen">
-      <div className="bg-white shadow-md rounded-xl px-8 pt-6 pb-8 w-full max-w-md">
+      <div className="container bg-white shadow-md rounded-xl px-8 pt-6 pb-8 w-full max-w-md">
         <h2 className="text-3xl font-bold mb-6 text-center text-white">
           <span className="bg-gradient-to-r text-transparent from-blue-500 to-blue-700 bg-clip-text">
             AWT-VM Register
@@ -67,23 +67,25 @@ function Register() {
 
         <form onSubmit={handleRegister}>
           {/* Email Field */}
-          <LabeledInput
+          <LabeledInputValidate
             label={"Email"}
             placeholder={"Enter your Email"}
             icon={<FaEnvelope />}
             type={"email"}
             inputValue={email}
             setInputValue={setEmail}
+            regex={/^[a-zA-Z0-9._%+-]+@accessworld\.net$/}
           />
 
           {/* Password Field */}
-          <LabeledInput
+          <LabeledInputValidate
             label={"Password"}
             placeholder={"Enter your password"}
             icon={<FaLock />}
             type={"password"}
             inputValue={password}
             setInputValue={setPassword}
+            regex={/^(?=.*[A-Z])[A-Za-z0-9]{8,}$/}
           />
 
           {/* Register Button */}

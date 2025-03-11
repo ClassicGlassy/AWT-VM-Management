@@ -5,7 +5,7 @@ function LabeledInputNumber({
   icon,
   inputValue,
   setInputValue,
-  minimum,
+  minimum = 1,
   maximum,
 }) {
   return (

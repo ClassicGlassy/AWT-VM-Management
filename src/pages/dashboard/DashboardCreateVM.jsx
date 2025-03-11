@@ -2,6 +2,7 @@ import { useState } from "react";
 
 // Components
 import LabeledInput from "../../components//inputbox/LabeledInput";
+import LabeledInputNumber from "../../components//inputbox/LabeledInputNumber";
 import ImageRadioButton from "../../components/ImageRadioButton";
 import PrimaryButton from "../../components/PrimaryButton";
 
@@ -12,7 +13,6 @@ import { FaMemory, FaHardDrive, FaDesktop } from "react-icons/fa6";
 
 import { SiCanonical, SiRockylinux } from "react-icons/si";
 import { FaWindows } from "react-icons/fa6";
-import LabelInputValidate from "../../components/inputbox/LabelInputValidate";
 
 function DashboardCreateVM() {
   // Essential
@@ -81,7 +81,7 @@ function DashboardCreateVM() {
           template: `${os}`,
           network: "Lab Network",
           cpus: `${cpu}`,
-          memory: `${memory}`,
+          memory: `${memory * 1024}`,
           disk_size: `${disk}`,
         }),
       });
@@ -101,7 +101,7 @@ function DashboardCreateVM() {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-xl px-10 py-6 pb- w-full ">
+    <div className=" bg-white shadow-md rounded-xl px-10 py-6 w-full max-w-5xl ">
       <h2 className="text-center font-bold uppercase border-b-2 border-b-blue-400 mb-5">
         Create Virtual machine
       </h2>
@@ -121,33 +121,36 @@ function DashboardCreateVM() {
         />
 
         {/* CPU Cores */}
-        <LabeledInput
+        <LabeledInputNumber
           label={"CPU Cores"}
           placeholder={"Enter CPU Cores"}
           inputValue={cpu}
           setInputValue={setCpu}
           type={"number"}
           icon={<HiMiniCpuChip />}
+          maximum={16}
         />
 
         {/* Memory */}
-        <LabeledInput
-          label={"Memory (in MB)"}
-          placeholder={"Enter Memory size (in MB)"}
+        <LabeledInputNumber
+          label={"Memory (in GB)"}
+          placeholder={"Enter Memory size (in GB)"}
           inputValue={memory}
           setInputValue={setMemory}
           type={"number"}
           icon={<FaMemory />}
+          maximum={32}
         />
 
         {/* Disk */}
-        <LabeledInput
+        <LabeledInputNumber
           label={"Disk size (in GB)"}
           placeholder={"Enter Disk size (in GB)"}
           inputValue={disk}
           setInputValue={setDisk}
           type={"number"}
           icon={<FaHardDrive />}
+          maximum={100}
         />
         {/* OS Selection */}
         <div className="col-start-1 md:col-end-3">
@@ -177,16 +180,6 @@ function DashboardCreateVM() {
           <PrimaryButton buttonText={"Create VM"} loading={loading} />
         </div>
       </form>
-
-      {/* <LabelInputValidate
-        label={"VM Name"}
-        placeholder={"Enter VM Name"}
-        inputValue={vmName}
-        setInputValue={setVmName}
-        type={"text"}
-        icon={<MdDriveFileRenameOutline />}
-        regex={/^[a-zA-Z0-9._%+-]+@accessworld.net$/}
-      /> */}
     </div>
   );
 }

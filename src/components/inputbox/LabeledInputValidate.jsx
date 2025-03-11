@@ -9,6 +9,7 @@ function LabelInputValidate({
   inputValue,
   setInputValue,
   regex,
+  errorMsg,
 }) {
   const [isValid, setIsValid] = useState(null); // Track the validation state
   const hasTyped = useRef(false); // Track if the user has started typing
@@ -62,7 +63,9 @@ function LabelInputValidate({
           onChange={handleInputChange}
           value={inputValue}
           autoComplete="true"
-          required={true}
+          required
+          pattern={regex ? `${regex.source}` : ""}
+          title={errorMsg}
         />
       </div>
     </div>

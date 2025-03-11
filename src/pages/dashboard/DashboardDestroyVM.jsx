@@ -46,7 +46,7 @@ function DashboardDestroyVM() {
   }
 
   return (
-    <div className="block bg-white shadow-md rounded-xl px-10 py-6 pb-8 w-full">
+    <div className="block bg-white shadow-md rounded-xl px-10 py-6 pb-8 w-full max-w-3xl">
       <h2 className="text-center font-bold uppercase border-b-2 border-b-red-400 mb-5">
         Destroy Virtual machine
       </h2>

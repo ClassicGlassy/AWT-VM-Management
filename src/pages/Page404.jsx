@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import LinkButtonPositive from "../components/linkButton/LinkButtonPositive";
+import { IoHome } from "react-icons/io5";
 
 function Page404() {
   return (
-    <main className="flex flex-col justify-center items-center text-center min-h-screen bg-gray-200">
-      <h1 className="font-bold text-7xl mb-4">404</h1>
+    <main className="flex flex-col justify-center items-center text-center h-screen">
+      <h1 className="font-bold flex items-center text-7xl mb-4 transition-colors animate-pulse">
+        404
+      </h1>
       <p className="font-medium text-3xl text-gray-600 mb-4">
         Oops, This Page Not Found!
       </p>
@@ -15,9 +18,11 @@ function Page404() {
         </span>
       </p>
 
-      <Link to={"/"} className="bg-black text-white px-4 py-2 cursor-pointer">
+      {/* <Link to={"/"} className="bg-black text-white px-4 py-2 cursor-pointer">
         GO BACK HOME
-      </Link>
+      </Link> */}
+
+      <LinkButtonPositive to={"/"} text={"GO BACK HOME"} Icon={IoHome} />
     </main>
   );
 }

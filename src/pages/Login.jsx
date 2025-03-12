@@ -112,7 +112,7 @@ function Login() {
               type={"password"}
               inputValue={password}
               setInputValue={setPassword}
-              regex={/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/}
+              regex={/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/}
               errorMsg={
                 "Password must contain at least one uppercase letter and a number, and be at least 8 characters long."
               }

@@ -3,10 +3,8 @@ export function checkToken() {
   const email = localStorage.getItem("email");
 
   if (access_token && email) {
-    // Connect to Server
+    // Connect to Server to check for access_token validatity
 
-    // If Token is valid then Redirect to Dashboard Logic
-    // navigate("/dashboard");
     return true;
   }
   return false;

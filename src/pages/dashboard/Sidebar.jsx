@@ -5,8 +5,7 @@ import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { IoMdCreate, IoMdTrash } from "react-icons/io";
 
 // Logo Branding
-// import logo from "../../../assets/logo.svg";
-import logo from "../../assets/favicon.svg";
+import logo from "../../assets/icon.svg";
 
 // Components
 import LinkButtonPositive from "../../components/linkButton/LinkButtonPositive";
@@ -52,7 +51,7 @@ function Sidebar({ email, logout }) {
       <div className="w-full h-20 border-t-2 text-right flex flex-col justify-center ">
         <p className="text-black overflow-x-clip mb-2">{email}</p>
         <button
-          className="text-negative hover:text-negative-hover text-right flex items-center justify-end"
+          className="text-negative hover:text-negative-hover text-right flex items-center justify-end cursor-pointer"
           onClick={logout}
         >
           <FaArrowRightFromBracket className="mr-2 text-2xl md:text-xl" />

@@ -1,15 +1,26 @@
 import { useState } from "react";
+
+// Components
 import LabeledInput from "../../components/inputbox/LabeledInput";
-import PrimaryButton from "../../components/PrimaryButton";
+import PrimaryButton from "../../components/button/PrimaryButton";
+
+import PositiveAlert from "../../components/alert/PositiveAlert";
+import NegativeAlert from "../../components/alert/NegativeAlert";
 
 function DashboardDestroyVM() {
-  // Essential
+  // Button Requirement
   const [loading, setLoading] = useState(false);
 
   // InputValue
   const [vmName, setVmName] = useState("");
 
-  // Method
+  // Alert Requirements
+  const [successToggle, setSuccessToggle] = useState(false);
+  const [successText, setSuccessText] = useState("");
+  const [errorToggle, setErrorToggle] = useState(false);
+  const [errorText, setErrorText] = useState("");
+
+  // OnSubmit Function
   async function destroyVM(e) {
     e.preventDefault();
 
@@ -20,9 +31,11 @@ function DashboardDestroyVM() {
 
     setLoading(true);
 
-    const BASE_URL = import.meta.env.VITE_BASE_ENDPOINT;
-    const access_token = localStorage.getItem("access_token");
     try {
+      // BASE_URL for Fetch and access_token for Authorization.
+      const BASE_URL = import.meta.env.VITE_BASE_ENDPOINT;
+      const access_token = localStorage.getItem("access_token");
+
       const response = await fetch(`${BASE_URL}/destroy-vm`, {
         method: "DELETE",
         headers: {
@@ -36,9 +49,18 @@ function DashboardDestroyVM() {
 
       const data = await response.json();
 
-      alert(data.message);
+      // Check if the Status code is 200
+      if (!response.ok) {
+        throw new Error(data?.message || "Request failed. Please try again.");
+      }
+
+      // Request Success
+      setSuccessToggle(true);
+      setSuccessText(data);
     } catch (error) {
-      alert(error.message);
+      // Request Error
+      setErrorToggle(true);
+      setErrorText(error);
     } finally {
       setLoading(false);
       setVmName("");
@@ -46,22 +68,41 @@ function DashboardDestroyVM() {
   }
 
   return (
-    <div className="block bg-white shadow-md rounded-xl px-10 py-6 pb-8 w-full max-w-3xl">
-      <h2 className="text-center font-bold uppercase border-b-2 border-b-red-400 mb-5">
-        Destroy Virtual machine
-      </h2>
-      <form onSubmit={destroyVM}>
-        <LabeledInput
-          label={"VM Name"}
-          placeholder={"Enter VM to destroy"}
-          inputValue={vmName}
-          setInputValue={setVmName}
-          type={"text"}
-        />
+    <>
+      {/* Main Content */}
+      <div className="block bg-white shadow-md rounded-xl px-10 py-6 pb-8 w-full max-w-3xl">
+        <h2 className="text-center font-bold text-xl uppercase border-b-2 border-b-red-400 mb-5">
+          Destroy Virtual machine
+        </h2>
+        <form onSubmit={destroyVM}>
+          <LabeledInput
+            label={"VM Name"}
+            type={"text"}
+            placeholder={"Enter VM to destroy"}
+            inputValue={vmName}
+            setInputValue={setVmName}
+          />
 
-        <PrimaryButton buttonText={"Destroy"} loading={loading} />
-      </form>
-    </div>
+          <PrimaryButton buttonText={"Destroy"} loading={loading} />
+        </form>
+      </div>
+
+      {/* Success Alert */}
+      <PositiveAlert
+        isVisible={successToggle}
+        setIsVisible={setSuccessToggle}
+        title={"Destroyed"}
+        message={successText}
+      />
+
+      {/* Error Alert */}
+      <NegativeAlert
+        isVisible={errorToggle}
+        setIsVisible={setErrorToggle}
+        title={"Error"}
+        message={errorText}
+      />
+    </>
   );
 }
 

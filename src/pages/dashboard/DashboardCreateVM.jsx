@@ -3,19 +3,23 @@ import { useState } from "react";
 // Components
 import LabeledInput from "../../components//inputbox/LabeledInput";
 import LabeledInputNumber from "../../components//inputbox/LabeledInputNumber";
-import ImageRadioButton from "../../components/ImageRadioButton";
-import PrimaryButton from "../../components/PrimaryButton";
+import ImageRadioButton from "../../components/imageRadio/ImageRadioButton";
+import PrimaryButton from "../../components/button/PrimaryButton";
+
+import PositiveAlert from "../../components/alert/PositiveAlert";
+import NegativeAlert from "../../components/alert/NegativeAlert";
 
 // Icons
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { HiMiniCpuChip } from "react-icons/hi2";
 import { FaMemory, FaHardDrive, FaDesktop } from "react-icons/fa6";
 
+// OS Icons
 import { SiCanonical, SiRockylinux } from "react-icons/si";
 import { FaWindows } from "react-icons/fa6";
 
 function DashboardCreateVM() {
-  // Essential
+  // Button Requirement
   const [loading, setLoading] = useState(false);
 
   // InputValue
@@ -25,26 +29,32 @@ function DashboardCreateVM() {
   const [disk, setDisk] = useState("");
   const [os, setOs] = useState("");
 
+  // Alert Requirements
+  const [successToggle, setSuccessToggle] = useState(false);
+  const [successText, setSuccessText] = useState("");
+  const [errorToggle, setErrorToggle] = useState(false);
+  const [errorText, setErrorText] = useState("");
+
   // OS Options
   const os_options = [
     {
       name: "Windows Server",
       value: "windows",
-      icon: <FaWindows />,
+      icon: FaWindows,
     },
     {
       name: "Ubuntu 20.04 LTS",
       value: "ubuntu-focal-20.04-cloudimg",
-      icon: <SiCanonical />,
+      icon: SiCanonical,
     },
     {
       name: "Rockey Linux",
       value: "rockey",
-      icon: <SiRockylinux />,
+      icon: SiRockylinux,
     },
   ];
 
-  // Method
+  // OnSubmit Method
   async function createVM(e) {
     e.preventDefault();
 
@@ -87,9 +97,19 @@ function DashboardCreateVM() {
       });
 
       const data = await response.json();
-      alert(data.message);
+
+      // Check if the Status code is 200
+      if (!response.ok) {
+        throw new Error(data?.message || "Request failed. Please try again.");
+      }
+
+      // Request Success
+      setSuccessToggle(true);
+      setSuccessText(data);
     } catch (error) {
-      alert(error.message);
+      // Request Error
+      setErrorToggle(true);
+      setErrorText(error);
     } finally {
       setLoading(false);
       setVmName("");
@@ -101,86 +121,106 @@ function DashboardCreateVM() {
   }
 
   return (
-    <div className=" bg-white shadow-md rounded-xl px-10 py-6 w-full max-w-5xl ">
-      <h2 className="text-center font-bold uppercase border-b-2 border-b-blue-400 mb-5">
-        Create Virtual machine
-      </h2>
+    <>
+      {/* Main Content */}
+      <div className=" bg-white shadow-md rounded-xl px-10 py-6 w-full max-w-5xl ">
+        <h2 className="text-center text-xl font-bold uppercase border-b-2 border-b-blue-400 mb-5">
+          Create Virtual machine
+        </h2>
 
-      <form
-        onSubmit={createVM}
-        className="grid auto-rows-min gap-4 md:grid-cols-2"
-      >
-        {/* VM Name */}
-        <LabeledInput
-          label={"VM Name"}
-          placeholder={"Enter VM Name"}
-          inputValue={vmName}
-          setInputValue={setVmName}
-          type={"text"}
-          icon={<MdDriveFileRenameOutline />}
-        />
+        <form
+          onSubmit={createVM}
+          className="grid auto-rows-min gap-4 md:grid-cols-2"
+        >
+          {/* VM Name */}
+          <LabeledInput
+            label={"VM Name"}
+            placeholder={"Enter VM Name"}
+            inputValue={vmName}
+            setInputValue={setVmName}
+            type={"text"}
+            Icon={MdDriveFileRenameOutline}
+          />
 
-        {/* CPU Cores */}
-        <LabeledInputNumber
-          label={"CPU Cores"}
-          placeholder={"Enter CPU Cores"}
-          inputValue={cpu}
-          setInputValue={setCpu}
-          type={"number"}
-          icon={<HiMiniCpuChip />}
-          maximum={16}
-        />
+          {/* CPU Cores */}
+          <LabeledInputNumber
+            label={"CPU Cores"}
+            placeholder={"Enter CPU Cores"}
+            inputValue={cpu}
+            setInputValue={setCpu}
+            type={"number"}
+            Icon={HiMiniCpuChip}
+            maximum={16}
+          />
 
-        {/* Memory */}
-        <LabeledInputNumber
-          label={"Memory (in GB)"}
-          placeholder={"Enter Memory size (in GB)"}
-          inputValue={memory}
-          setInputValue={setMemory}
-          type={"number"}
-          icon={<FaMemory />}
-          maximum={32}
-        />
+          {/* Memory */}
+          <LabeledInputNumber
+            label={"Memory (in GB)"}
+            placeholder={"Enter Memory size (in GB)"}
+            inputValue={memory}
+            setInputValue={setMemory}
+            type={"number"}
+            Icon={FaMemory}
+            maximum={32}
+          />
 
-        {/* Disk */}
-        <LabeledInputNumber
-          label={"Disk size (in GB)"}
-          placeholder={"Enter Disk size (in GB)"}
-          inputValue={disk}
-          setInputValue={setDisk}
-          type={"number"}
-          icon={<FaHardDrive />}
-          maximum={100}
-        />
-        {/* OS Selection */}
-        <div className="col-start-1 md:col-end-3">
-          <label className="text-gray-700 text-lg font-bold mb-2 flex items-center">
-            <span className=" mr-2 align-middle text-xl">
-              <FaDesktop />
-            </span>
-            Select OS
-          </label>
-          <div className="grid md:grid-cols-3 gap-3 mb-4 col-start-1 col-end-3">
-            {os_options.map((os_option, key) => (
-              <ImageRadioButton
-                label={os_option.name}
-                groupName={"os_options"}
-                value={os_option.value}
-                icon={os_option.icon}
-                option={os}
-                setOption={setOs}
-                key={key}
-              />
-            ))}
+          {/* Disk */}
+          <LabeledInputNumber
+            label={"Disk size (in GB)"}
+            placeholder={"Enter Disk size (in GB)"}
+            inputValue={disk}
+            setInputValue={setDisk}
+            type={"number"}
+            Icon={FaHardDrive}
+            maximum={100}
+          />
+
+          {/* OS Selection */}
+          <div className="col-start-1 md:col-end-3">
+            <label className="text-gray-700 text-lg font-bold mb-2 flex items-center">
+              <span className=" mr-2 align-middle text-xl">
+                <FaDesktop />
+              </span>
+              Select OS
+            </label>
+            <div className="grid md:grid-cols-3 gap-3 mb-4 col-start-1 col-end-3">
+              {os_options.map((os_option, key) => (
+                <ImageRadioButton
+                  label={os_option.name}
+                  groupName={"os_options"}
+                  value={os_option.value}
+                  Icon={os_option.icon}
+                  option={os}
+                  setOption={setOs}
+                  key={key}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Create Button */}
-        <div className="col-start-1 md:col-end-3">
-          <PrimaryButton buttonText={"Create VM"} loading={loading} />
-        </div>
-      </form>
-    </div>
+          {/* Create Button */}
+          <div className="col-start-1 md:col-end-3">
+            <PrimaryButton buttonText={"Create VM"} loading={loading} />
+          </div>
+        </form>
+      </div>
+
+      {/* Success Alert */}
+      <PositiveAlert
+        isVisible={successToggle}
+        setIsVisible={setSuccessToggle}
+        title={"VM Created"}
+        message={successText}
+      />
+
+      {/* Error Alert */}
+      <NegativeAlert
+        isVisible={errorToggle}
+        setIsVisible={setErrorToggle}
+        message={errorText}
+        title={"Error"}
+      />
+    </>
   );
 }
 

@@ -18,10 +18,6 @@ function Page404() {
         </span>
       </p>
 
-      {/* <Link to={"/"} className="bg-black text-white px-4 py-2 cursor-pointer">
-        GO BACK HOME
-      </Link> */}
-
       <LinkButtonPositive to={"/"} text={"GO BACK HOME"} Icon={IoHome} />
     </main>
   );

@@ -3,14 +3,14 @@ function LabeledInput({
   label,
   placeholder,
   type,
-  icon,
+  Icon,
   inputValue,
   setInputValue,
 }) {
   return (
     <div className="mb-6">
       <label className="text-gray-700 text-lg font-bold mb-2 flex items-center">
-        <span className=" mr-2 align-middle text-xl">{icon}</span>
+        <span className=" mr-2 align-middle text-xl">{Icon && <Icon />}</span>
         {label}
       </label>
 

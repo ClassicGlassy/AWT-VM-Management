@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-// import { useState } from "react";
 
 function ImageRadioButton({
   label,
@@ -7,16 +6,11 @@ function ImageRadioButton({
   value,
   option,
   setOption,
-  icon,
+  Icon,
 }) {
-  // const [selected, setSelected] = useState(false);
-
   function handleClick() {
     setOption(value);
-    // setSelected((prev) => !prev);
   }
-
-  // function
 
   return (
     <div
@@ -27,7 +21,9 @@ function ImageRadioButton({
           : "border-gray-300"
       }`}
     >
-      <div className="text-5xl flex justify-center mb-3">{icon}</div>
+      <div className="text-5xl flex justify-center mb-3">
+        {Icon && <Icon />}
+      </div>
       <p className="text-center font-bold text-lg">{label}</p>
       <input
         type="radio"

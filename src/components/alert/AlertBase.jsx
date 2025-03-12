@@ -20,7 +20,7 @@ function AlertBase({ visible, setVisible, children }) {
             e.preventDefault();
             setVisible(false);
           }}
-          className="px-3 py-1 bg-black text-white mt-4"
+          className="px-3 py-1 bg-black text-white mt-4 cursor-pointer rounded-md"
         >
           Close
         </button>

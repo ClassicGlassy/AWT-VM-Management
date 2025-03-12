@@ -2,7 +2,7 @@
 function LabeledInputNumber({
   label,
   placeholder,
-  icon,
+  Icon,
   inputValue,
   setInputValue,
   minimum = 1,
@@ -11,7 +11,7 @@ function LabeledInputNumber({
   return (
     <div className="mb-6">
       <label className="text-gray-700 text-lg font-bold mb-2 flex items-center">
-        <span className=" mr-2 align-middle text-xl">{icon}</span>
+        <span className=" mr-2 align-middle text-xl">{Icon && <Icon />}</span>
         {label}
       </label>
 

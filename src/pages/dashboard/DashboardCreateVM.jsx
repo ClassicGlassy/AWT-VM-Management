@@ -13,6 +13,7 @@ import NegativeAlert from "../../components/alert/NegativeAlert";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { HiMiniCpuChip } from "react-icons/hi2";
 import { FaMemory, FaHardDrive, FaDesktop } from "react-icons/fa6";
+import { TbLockPassword } from "react-icons/tb";
 
 // OS Icons
 import { SiCanonical, SiRockylinux } from "react-icons/si";
@@ -24,6 +25,7 @@ function DashboardCreateVM() {
 
   // InputValue
   const [vmName, setVmName] = useState("");
+  const [vmPassword, setVmPassword] = useState("");
   const [cpu, setCpu] = useState("");
   const [memory, setMemory] = useState("");
   const [disk, setDisk] = useState("");
@@ -61,6 +63,7 @@ function DashboardCreateVM() {
     // Basic Validation with trimming strings
     if (
       !vmName?.trim() ||
+      !vmPassword?.trim() ||
       !cpu?.trim() ||
       !memory?.trim() ||
       !disk?.trim() ||
@@ -88,6 +91,7 @@ function DashboardCreateVM() {
           datastore: "TEST-LUN0",
           resource_pool: "Resources",
           name: `${vmName}`,
+          password: `${vmPassword}`,
           template: `${os}`,
           network: "Lab Network",
           cpus: `${cpu}`,
@@ -130,50 +134,64 @@ function DashboardCreateVM() {
 
         <form
           onSubmit={createVM}
-          className="grid auto-rows-min gap-4 md:grid-cols-2"
+          // className="grid auto-rows-min gap-4 md:grid-cols-2"
         >
-          {/* VM Name */}
-          <LabeledInput
-            label={"VM Name"}
-            placeholder={"Enter VM Name"}
-            inputValue={vmName}
-            setInputValue={setVmName}
-            type={"text"}
-            Icon={MdDriveFileRenameOutline}
-          />
+          {/* Input options in grids */}
+          <div className="grid auto-rows-min gap-4 md:grid-cols-2">
+            {/* VM Name */}
+            <LabeledInput
+              label={"VM Name"}
+              placeholder={"Enter VM Name"}
+              inputValue={vmName}
+              setInputValue={setVmName}
+              type={"text"}
+              Icon={MdDriveFileRenameOutline}
+            />
 
-          {/* CPU Cores */}
-          <LabeledInputNumber
-            label={"CPU Cores"}
-            placeholder={"Enter CPU Cores"}
-            inputValue={cpu}
-            setInputValue={setCpu}
-            type={"number"}
-            Icon={HiMiniCpuChip}
-            maximum={16}
-          />
+            {/* CPU Cores */}
+            <LabeledInputNumber
+              label={"CPU Cores"}
+              placeholder={"Enter CPU Cores"}
+              inputValue={cpu}
+              setInputValue={setCpu}
+              type={"number"}
+              Icon={HiMiniCpuChip}
+              maximum={16}
+            />
 
-          {/* Memory */}
-          <LabeledInputNumber
-            label={"Memory (in GB)"}
-            placeholder={"Enter Memory size (in GB)"}
-            inputValue={memory}
-            setInputValue={setMemory}
-            type={"number"}
-            Icon={FaMemory}
-            maximum={32}
-          />
+            {/* Memory */}
+            <LabeledInputNumber
+              label={"Memory (in GB)"}
+              placeholder={"Enter Memory size (in GB)"}
+              inputValue={memory}
+              setInputValue={setMemory}
+              type={"number"}
+              Icon={FaMemory}
+              maximum={32}
+            />
 
-          {/* Disk */}
-          <LabeledInputNumber
-            label={"Disk size (in GB)"}
-            placeholder={"Enter Disk size (in GB)"}
-            inputValue={disk}
-            setInputValue={setDisk}
-            type={"number"}
-            Icon={FaHardDrive}
-            maximum={100}
-          />
+            {/* Disk */}
+            <LabeledInputNumber
+              label={"Disk size (in GB)"}
+              placeholder={"Enter Disk size (in GB)"}
+              inputValue={disk}
+              setInputValue={setDisk}
+              type={"number"}
+              Icon={FaHardDrive}
+              maximum={100}
+            />
+          </div>
+
+          {/* User credential */}
+          <div className="col-start-1 md:col-end-3">
+            <LabeledInput
+              label={"VM Password"}
+              inputValue={vmPassword}
+              setInputValue={setVmPassword}
+              placeholder={"Enter VM Password"}
+              Icon={TbLockPassword}
+            />
+          </div>
 
           {/* OS Selection */}
           <div className="col-start-1 md:col-end-3">

@@ -137,7 +137,7 @@ function DashboardCreateVM() {
           // className="grid auto-rows-min gap-4 md:grid-cols-2"
         >
           {/* Input options in grids */}
-          <div className="grid auto-rows-min gap-4 md:grid-cols-2">
+          <div className="grid auto-rows-min gap-x-4 md:grid-cols-2">
             {/* VM Name */}
             <LabeledInput
               label={"VM Name"}

@@ -12,7 +12,7 @@ import NegativeAlert from "../../components/alert/NegativeAlert";
 // Icons
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { HiMiniCpuChip } from "react-icons/hi2";
-import { FaMemory, FaHardDrive, FaDesktop } from "react-icons/fa6";
+import { FaMemory, FaHardDrive, FaDesktop, FaServer } from "react-icons/fa6";
 import { TbLockPassword } from "react-icons/tb";
 
 // OS Icons
@@ -127,94 +127,108 @@ function DashboardCreateVM() {
   return (
     <>
       {/* Main Content */}
-      <div className=" bg-white shadow-md rounded-xl px-10 py-6 w-full max-w-5xl ">
+      <div className=" bg-white shadow-md rounded-xl px-7 py-6 w-full max-w-5xl ">
         <h2 className="text-center text-xl font-bold uppercase border-b-2 border-b-blue-400 mb-5">
           Create Virtual machine
         </h2>
 
-        <form
-          onSubmit={createVM}
-          // className="grid auto-rows-min gap-4 md:grid-cols-2"
-        >
-          {/* Input options in grids */}
-          <div className="grid auto-rows-min gap-x-4 md:grid-cols-2">
-            {/* VM Name */}
-            <LabeledInput
-              label={"VM Name"}
-              placeholder={"Enter VM Name"}
-              inputValue={vmName}
-              setInputValue={setVmName}
-              type={"text"}
-              Icon={MdDriveFileRenameOutline}
-            />
+        <form onSubmit={createVM} className="space-y-4">
+          {/* Machine Credentials */}
+          <fieldset className="border-2 border-gray-500 px-6 py-2 rounded-lg">
+            <legend className="mb-2">Machine Credentials</legend>
 
-            {/* CPU Cores */}
-            <LabeledInputNumber
-              label={"CPU Cores"}
-              placeholder={"Enter CPU Cores"}
-              inputValue={cpu}
-              setInputValue={setCpu}
-              type={"number"}
-              Icon={HiMiniCpuChip}
-              maximum={16}
-            />
+            <div className="grid auto-rows-min gap-x-4 md:grid-cols-2">
+              {/* VM Name */}
+              <LabeledInput
+                label={"Machine Name"}
+                placeholder={"Enter Machine Name"}
+                inputValue={vmName}
+                setInputValue={setVmName}
+                type={"text"}
+                Icon={MdDriveFileRenameOutline}
+              />
 
-            {/* Memory */}
-            <LabeledInputNumber
-              label={"Memory (in GB)"}
-              placeholder={"Enter Memory size (in GB)"}
-              inputValue={memory}
-              setInputValue={setMemory}
-              type={"number"}
-              Icon={FaMemory}
-              maximum={32}
-            />
-
-            {/* Disk */}
-            <LabeledInputNumber
-              label={"Disk size (in GB)"}
-              placeholder={"Enter Disk size (in GB)"}
-              inputValue={disk}
-              setInputValue={setDisk}
-              type={"number"}
-              Icon={FaHardDrive}
-              maximum={100}
-            />
-          </div>
-
-          {/* User credential */}
-          <div className="col-start-1 md:col-end-3">
-            <LabeledInput
-              label={"VM Password"}
-              inputValue={vmPassword}
-              setInputValue={setVmPassword}
-              placeholder={"Enter VM Password"}
-              Icon={TbLockPassword}
-            />
-          </div>
-
-          {/* OS Selection */}
-          <div className="col-start-1 md:col-end-3">
-            <label className="text-gray-700 text-lg font-bold mb-2 flex items-center">
-              <span className=" mr-2 align-middle text-xl">
-                <FaDesktop />
-              </span>
-              Select OS
-            </label>
-            <div className="grid md:grid-cols-3 gap-3 mb-4 col-start-1 col-end-3">
-              {os_options.map((os_option, key) => (
-                <ImageRadioButton
-                  label={os_option.name}
-                  groupName={"os_options"}
-                  value={os_option.value}
-                  Icon={os_option.icon}
-                  option={os}
-                  setOption={setOs}
-                  key={key}
-                />
-              ))}
+              {/* VM Password */}
+              <LabeledInput
+                label={"Machine Password"}
+                inputValue={vmPassword}
+                setInputValue={setVmPassword}
+                placeholder={"Enter Machine Password"}
+                Icon={TbLockPassword}
+              />
             </div>
-          </div>
+          </fieldset>
+
+          {/* Machine Configuration */}
+          <fieldset className="border-2 border-gray-500 px-6 py-2 rounded-lg">
+            <legend className="mb-2">Machine Configuration</legend>
+
+            <div className="grid auto-rows-min gap-x-4 md:grid-cols-2">
+              {/* CPU Cores */}
+              <LabeledInputNumber
+                label={"CPU Cores"}
+                placeholder={"Enter CPU Cores"}
+                inputValue={cpu}
+                setInputValue={setCpu}
+                type={"number"}
+                Icon={HiMiniCpuChip}
+                maximum={16}
+              />
+
+              {/* Memory */}
+              <LabeledInputNumber
+                label={"Memory (in GB)"}
+                placeholder={"Enter Memory size (in GB)"}
+                inputValue={memory}
+                setInputValue={setMemory}
+                type={"number"}
+                Icon={FaMemory}
+                maximum={32}
+              />
+
+              {/* Disk */}
+              <LabeledInputNumber
+                label={"Disk size (in GB)"}
+                placeholder={"Enter Disk size (in GB)"}
+                inputValue={disk}
+                setInputValue={setDisk}
+                type={"number"}
+                Icon={FaHardDrive}
+                maximum={100}
+              />
+
+              {/* Temporary vsphere_server */}
+              <LabeledInput
+                label={"vSphere Server"}
+                inputValue={"lab.samundra.local"}
+                Icon={FaServer}
+                disabled
+              />
+            </div>
+
+            {/* OS Selection */}
+            <div className="col-start-1 md:col-end-3">
+              <label className="text-gray-700 text-lg font-bold mb-2 flex items-center">
+                <span className=" mr-2 align-middle text-xl">
+                  <FaDesktop />
+                </span>
+                Select OS
+              </label>
+              <div className="grid md:grid-cols-3 gap-3 mb-4 col-start-1 col-end-3">
+                {os_options.map((os_option, key) => (
+                  <ImageRadioButton
+                    label={os_option.name}
+                    groupName={"os_options"}
+                    value={os_option.value}
+                    Icon={os_option.icon}
+                    option={os}
+                    setOption={setOs}
+                    key={key}
+                  />
+                ))}
+              </div>
+            </div>
+          </fieldset>
 
           {/* Create Button */}
           <div className="col-start-1 md:col-end-3">

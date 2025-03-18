@@ -103,7 +103,7 @@ function RowElement({ vmName, uid, createdAt }) {
       </td>
       <td className="px-4 py-1 flex justify-evenly " colSpan={1}>
         <LinkButtonPrimary
-          to={`/dashboard/edit/${uid}`}
+          to={`/dashboard/vms/${uid}`}
           text={"Modify"}
           Icon={BsGearFill}
         />

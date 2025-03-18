@@ -4,8 +4,34 @@ import LinkButtonNegative from "../../components/linkButton/LinkButtonNegative";
 
 import { FaTrash } from "react-icons/fa6";
 import { BsGearFill } from "react-icons/bs";
+import { useEffect, useState } from "react";
 
 function DashboardListVM() {
+  const [vmList, setVMList] = useState([]);
+  useEffect(() => {
+    async function loadVMList() {
+      const BASE_URL = import.meta.env.VITE_BASE_ENDPOINT;
+      const access_token = localStorage.getItem("access_token");
+
+      try {
+        const response = await fetch(`${BASE_URL}/list-vm`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
+
+        const data = await response.json();
+        setVMList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    loadVMList();
+  }, []);
+
   return (
     <>
       {/* Main Content */}
@@ -41,8 +67,6 @@ function DashboardListVM() {
                 key={key}
               />
             ))}
-
-            {/* <RowElement vmName={"Saurab"} uid={"123456"} /> */}
           </tbody>
         </table>
       </div>

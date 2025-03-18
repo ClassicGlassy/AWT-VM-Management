@@ -16,6 +16,8 @@ import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import DashboardIndex from "./pages/dashboard/DashboardIndex";
 import DashboardCreateVM from "./pages/dashboard/DashboardCreateVM";
 import DashboardDestroyVM from "./pages/dashboard/DashboardDestroyVM";
+import DashboardListVM from "./pages/dashboard/DashboardListVM";
+import DashboardEditVM from "./pages/dashboard/DashboardEditVM";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -29,6 +31,8 @@ createRoot(document.getElementById("root")).render(
         <Route element={<DashboardIndex />} index />
         <Route path="create-vm" element={<DashboardCreateVM />} />
         <Route path="destroy-vm" element={<DashboardDestroyVM />} />
+        <Route path="list-vm" element={<DashboardListVM />} />
+        <Route path="edit/:uid" element={<DashboardEditVM />} />
       </Route>
 
       {/* @404 page */}

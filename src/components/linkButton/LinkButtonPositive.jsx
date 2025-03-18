@@ -7,10 +7,10 @@ function LinkButtonPositive({ to, Icon, text }) {
       to={to}
       className="py-2 px-5 text-white bg-positive hover:bg-positive-hover flex justify-center items-center rounded-md font-medium transition-colors ease-in-out duration-200"
     >
-      <span className="inline-block text-2xl md:text-3xl">
+      <span className="inline-block text-2xl md:text-lg">
         {Icon && <Icon />}
       </span>
-      <span className="hidden md:block ml-4">{text}</span>
+      <span className="hidden md:block md:ml-2">{text}</span>
     </Link>
   );
 }

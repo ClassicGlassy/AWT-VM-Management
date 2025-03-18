@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
-function LinkButtonNegative({ to, Icon, text }) {
+function LinkButtonPrimary({ to, Icon, text }) {
   return (
     <Link
       to={to}
-      className="py-2 px-5 text-white bg-negative hover:bg-negative-hover flex justify-center items-center rounded-md font-medium transition-colors ease-in-out duration-200"
+      className="py-2 px-5 text-white bg-blue-500 hover:bg-blue-600 flex justify-center items-center rounded-md font-medium transition-colors ease-in-out duration-200"
     >
       <span className="inline-block text-2xl md:text-lg">
         {Icon && <Icon />}
@@ -14,4 +14,4 @@ function LinkButtonNegative({ to, Icon, text }) {
     </Link>
   );
 }
-export default LinkButtonNegative;
+export default LinkButtonPrimary;

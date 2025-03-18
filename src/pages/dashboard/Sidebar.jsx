@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
 
 // Icons
-import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { FaArrowRightFromBracket, FaList } from "react-icons/fa6";
 import { IoMdCreate, IoMdTrash } from "react-icons/io";
 
 // Logo Branding
@@ -10,7 +11,7 @@ import logo from "../../assets/icon.svg";
 // Components
 import LinkButtonPositive from "../../components/linkButton/LinkButtonPositive";
 import LinkButtonNegative from "../../components/linkButton/LinkButtonNegative";
-import { Link } from "react-router-dom";
+import LinkButtonPrimary from "../../components/linkButton/LinkButtonPrimary";
 
 function Sidebar({ email, logout }) {
   return (
@@ -32,6 +33,9 @@ function Sidebar({ email, logout }) {
 
       {/* Menus */}
       <div className="flex-1 flex flex-col justify-center space-y-6">
+        {/* List VM Link */}
+        <LinkButtonPrimary to={"list-vm"} Icon={FaList} text={"List VMs"} />
+
         {/* CreateVM Link */}
         <LinkButtonPositive
           to={"create-vm"}

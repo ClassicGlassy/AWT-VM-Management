@@ -34,20 +34,24 @@ function Sidebar({ email, logout }) {
       {/* Menus */}
       <div className="flex-1 flex flex-col justify-center space-y-6">
         {/* List VM Link */}
-        <LinkButtonPrimary to={"list-vm"} Icon={FaList} text={"List VMs"} />
+        <LinkButtonPrimary
+          to={"list-vm"}
+          Icon={FaList}
+          text={"List Machines"}
+        />
 
         {/* CreateVM Link */}
         <LinkButtonPositive
           to={"create-vm"}
           Icon={IoMdCreate}
-          text={"Create VM"}
+          text={"Create Machine"}
         />
 
         {/* DestroyVM Link*/}
         <LinkButtonNegative
           to={"destroy-vm"}
           Icon={IoMdTrash}
-          text={"Destroy VM"}
+          text={"Destroy Machine"}
         />
       </div>
 

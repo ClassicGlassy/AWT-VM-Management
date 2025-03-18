@@ -6,6 +6,7 @@ function LabeledInput({
   Icon,
   inputValue,
   setInputValue,
+  disabled = false,
 }) {
   return (
     <div className="mb-6">
@@ -17,13 +18,14 @@ function LabeledInput({
       <div className="">
         <input
           type={`${type}`}
-          className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-relaxed  focus:outline-blue-600 "
+          className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-relaxed  focus:outline-blue-600 disabled:bg-gray-200"
           placeholder={`${placeholder}`}
           onChange={(e) => setInputValue(e.target.value)}
           value={inputValue}
           autoComplete="true"
           required={true}
           min={1}
+          disabled={disabled}
         />
       </div>
     </div>

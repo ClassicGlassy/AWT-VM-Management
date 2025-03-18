@@ -1,13 +1,16 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
+
 import LinkButtonPrimary from "../../components/linkButton/LinkButtonPrimary";
 import LinkButtonNegative from "../../components/linkButton/LinkButtonNegative";
 
 import { FaTrash } from "react-icons/fa6";
 import { BsGearFill } from "react-icons/bs";
-import { useEffect, useState } from "react";
 
 function DashboardListVM() {
   const [vmList, setVMList] = useState([]);
+
+  const [filterText, setFilterText] = useState("");
   useEffect(() => {
     async function loadVMList() {
       const BASE_URL = import.meta.env.VITE_BASE_ENDPOINT;
@@ -41,6 +44,13 @@ function DashboardListVM() {
         </h2>
 
         {/* Search bar */}
+        <input
+          type="text"
+          value={filterText}
+          onChange={(e) => setFilterText(e.target.value)}
+          placeholder="Search Machine name"
+          className="w-full text-lg px-3 py-2 border-2 border-blue-500 rounded-lg font-medium outline-blue-500 bg-gray-200 text-black placeholder:text-gray-500"
+        />
 
         <table className="w-full border-separate border-spacing-y-2">
           <thead className="text-lg">
@@ -59,14 +69,18 @@ function DashboardListVM() {
 
           <tbody>
             {/* List all VMs */}
-            {vmList.map((vm, key) => (
-              <RowElement
-                vmName={vm.name}
-                uid={vm.uid}
-                createdAt={vm.createdAt}
-                key={key}
-              />
-            ))}
+            {vmList
+              .filter((vm) =>
+                vm.name.toLowerCase().includes(filterText.toLowerCase())
+              )
+              .map((vm, key) => (
+                <RowElement
+                  vmName={vm.name}
+                  uid={vm.uid}
+                  createdAt={vm.createdAt}
+                  key={key}
+                />
+              ))}
           </tbody>
         </table>
       </div>

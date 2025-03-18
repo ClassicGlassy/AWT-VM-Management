@@ -60,7 +60,7 @@ function DashboardEditVM() {
     }
 
     loadVMDetails();
-  }, []);
+  }, [access_token, BASE_URL, uid]);
 
   async function modifyVM(e) {
     e.preventDefault();

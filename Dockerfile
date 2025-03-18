@@ -24,6 +24,7 @@ FROM nginx:alpine
 # Copy the built files from the build stage to Nginx's default directory
 # Update this path to match your production build output
 COPY --from=build_image /app/vm-manager/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose PORT to Host Machine
 EXPOSE 80

@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 
+// Components
 import LinkButtonPrimary from "../../components/linkButton/LinkButtonPrimary";
 import LinkButtonNegative from "../../components/linkButton/LinkButtonNegative";
 
+// Icons
 import { FaTrash } from "react-icons/fa6";
 import { BsGearFill } from "react-icons/bs";
 
@@ -17,7 +19,7 @@ function DashboardListVM() {
       const access_token = localStorage.getItem("access_token");
 
       try {
-        const response = await fetch(`${BASE_URL}/list-vm`, {
+        const response = await fetch(`${BASE_URL}/vms`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

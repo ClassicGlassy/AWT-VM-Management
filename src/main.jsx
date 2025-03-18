@@ -31,8 +31,8 @@ createRoot(document.getElementById("root")).render(
         <Route element={<DashboardIndex />} index />
         <Route path="create-vm" element={<DashboardCreateVM />} />
         <Route path="destroy-vm" element={<DashboardDestroyVM />} />
-        <Route path="list-vm" element={<DashboardListVM />} />
-        <Route path="edit/:uid" element={<DashboardEditVM />} />
+        <Route path="vms" element={<DashboardListVM />} />
+        <Route path="vms/:uid" element={<DashboardEditVM />} />
       </Route>
 
       {/* @404 page */}

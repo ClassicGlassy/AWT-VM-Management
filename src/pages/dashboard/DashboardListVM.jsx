@@ -3,10 +3,8 @@ import { useEffect, useState } from "react";
 
 // Components
 import LinkButtonPrimary from "../../components/linkButton/LinkButtonPrimary";
-import LinkButtonNegative from "../../components/linkButton/LinkButtonNegative";
 
 // Icons
-import { FaTrash } from "react-icons/fa6";
 import { BsGearFill } from "react-icons/bs";
 
 function DashboardListVM() {
@@ -103,17 +101,12 @@ function RowElement({ vmName, uid, createdAt }) {
       <td colSpan={1} className="hidden lg:table-cell px-4 py-1 text-center">
         {createdAt}
       </td>
-      <td className="px-4 py-1 flex justify-evenly " colSpan={1}>
+      <td colSpan={1} className="px-4 py-1 flex justify-evenly ">
         <LinkButtonPrimary
           to={`/dashboard/vms/${uid}`}
           text={"Modify"}
           Icon={BsGearFill}
         />
-        {/* <LinkButtonNegative
-          to={`/dashboard/edit/${uid}`}
-          text={"Delete"}
-          Icon={FaTrash}
-        /> */}
       </td>
     </tr>
   );

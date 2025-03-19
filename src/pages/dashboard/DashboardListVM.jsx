@@ -54,37 +54,39 @@ function DashboardListVM() {
           className="w-full text-lg px-3 py-2 border-2 border-blue-500 rounded-lg font-medium outline-blue-500 bg-gray-200 text-black placeholder:text-gray-500"
         />
 
-        <table className="w-full border-separate border-spacing-y-2">
-          <thead className="text-lg">
-            <tr>
-              <th colSpan={2} className=" px-4 py-1">
-                Machine Name
-              </th>
-              <th colSpan={1} className="hidden lg:table-cell px-4 py-1">
-                Created At
-              </th>
-              <th colSpan={1} className=" px-4 py-1">
-                Actions
-              </th>
-            </tr>
-          </thead>
+        <div className="max-h-96 block overflow-y-scroll">
+          <table className="w-full border-separate border-spacing-y-2">
+            <thead className="text-lg sticky top-0 bg-white">
+              <tr>
+                <th colSpan={2} className=" px-4 py-1">
+                  Machine Name
+                </th>
+                <th colSpan={1} className="hidden lg:table-cell px-4 py-1">
+                  Created At
+                </th>
+                <th colSpan={1} className=" px-4 py-1">
+                  Actions
+                </th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {/* List all VMs */}
-            {vmList
-              .filter((vm) =>
-                vm.name.toLowerCase().includes(filterText.toLowerCase())
-              )
-              .map((vm, key) => (
-                <RowElement
-                  vmName={vm.name}
-                  uid={vm.uid}
-                  createdAt={vm.createdAt}
-                  key={key}
-                />
-              ))}
-          </tbody>
-        </table>
+            <tbody>
+              {/* List all VMs */}
+              {vmList
+                .filter((vm) =>
+                  vm.name.toLowerCase().includes(filterText.toLowerCase())
+                )
+                .map((vm, key) => (
+                  <RowElement
+                    vmName={vm.name}
+                    uid={vm.uid}
+                    createdAt={vm.createdAt}
+                    key={key}
+                  />
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

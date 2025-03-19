@@ -55,7 +55,7 @@ function Register() {
 
       // Request Success
       setSuccessToggle(true);
-      setSuccessText(data.message);
+      setSuccessText(data);
     } catch (error) {
       // Request Error
       setErrorToggle(true);

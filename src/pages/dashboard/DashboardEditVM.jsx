@@ -28,9 +28,9 @@ function DashboardEditVM() {
 
   // Inputs
   const [vmName, setVmName] = useState("");
-  const [vmCPU, setVmCPU] = useState();
-  const [vmRAM, setVmRAM] = useState();
-  const [vmDisk, setVmDisk] = useState();
+  const [cpu, setCpu] = useState();
+  const [memory, setMemory] = useState();
+  const [disk, setDisk] = useState();
 
   // Alert Requirements
   const [successToggle, setSuccessToggle] = useState(false);
@@ -58,9 +58,9 @@ function DashboardEditVM() {
         }
 
         setVmName(data.name);
-        setVmCPU(data.cpu);
-        setVmRAM(data.ram);
-        setVmDisk(data.disk);
+        setCpu(data.cpus);
+        setMemory(Number(data.memory) / 1024);
+        setDisk(data.disk_size);
       } catch (error) {
         // Request Error
         setErrorToggle(true);
@@ -72,7 +72,8 @@ function DashboardEditVM() {
     }
 
     loadVMDetails();
-  }, [access_token, BASE_URL, uid]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Modify Machine configurations
   async function modifyVM(e) {
@@ -88,9 +89,9 @@ function DashboardEditVM() {
           Authorization: `Bearer ${access_token}`,
         },
         body: JSON.stringify({
-          cpus: `${vmCPU}`,
-          memory: `${vmRAM * 1024}`,
-          disk_size: `${vmDisk}`,
+          cpus: `${cpu}`,
+          memory: `${memory * 1024}`,
+          disk_size: `${disk}`,
         }),
       });
 
@@ -124,10 +125,7 @@ function DashboardEditVM() {
     return (
       <>
         {/* If no data is fetched */}
-        {!vmName?.trim() ||
-        vmCPU === null ||
-        vmRAM === null ||
-        vmDisk === null ? (
+        {!vmName?.trim() || cpu === null || memory === null || disk === null ? (
           <p className="text-gray-700 text-lg font-bold mb-2 flex items-center">
             {errorText.message}
           </p>
@@ -166,8 +164,8 @@ function DashboardEditVM() {
                   <LabeledInputNumber
                     label={"CPU Cores"}
                     placeholder={"Enter CPU Cores"}
-                    inputValue={vmCPU}
-                    setInputValue={setVmCPU}
+                    inputValue={cpu}
+                    setInputValue={setCpu}
                     type={"number"}
                     Icon={HiMiniCpuChip}
                     maximum={16}
@@ -177,8 +175,8 @@ function DashboardEditVM() {
                   <LabeledInputNumber
                     label={"Memory (in GB)"}
                     placeholder={"Enter Memory size (in GB)"}
-                    inputValue={vmRAM}
-                    setInputValue={setVmRAM}
+                    inputValue={memory}
+                    setInputValue={setMemory}
                     type={"number"}
                     Icon={FaMemory}
                     maximum={32}
@@ -188,8 +186,8 @@ function DashboardEditVM() {
                   <LabeledInputNumber
                     label={"Disk size (in GB)"}
                     placeholder={"Enter Disk size (in GB)"}
-                    inputValue={vmDisk}
-                    setInputValue={setVmDisk}
+                    inputValue={disk}
+                    setInputValue={setDisk}
                     type={"number"}
                     Icon={FaHardDrive}
                     maximum={100}
